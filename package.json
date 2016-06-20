@@ -1,0 +1,33 @@
+{
+  "name": "Rate MegaNet",
+  "version": "1.0.0",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node .",
+    "pretest": "jshint .",
+    "posttest": "nsp check"
+  },
+  "dependencies": {
+    "async": "^2.0.0-rc.4",
+    "compression": "^1.6.2",
+    "cors": "^2.5.2",
+    "helmet": "^2.1.1",
+    "loopback": "^2.29.0",
+    "loopback-boot": "^2.18.1",
+    "loopback-component-explorer": "^2.5.0",
+    "loopback-connector-mysql": "^2.2.1",
+    "loopback-datasource-juggler": "^2.39.0",
+    "moment": "^2.13.0",
+    "serve-favicon": "^2.0.1"
+  },
+  "devDependencies": {
+    "jshint": "^2.5.6",
+    "nsp": "^2.1.0"
+  },
+  "repository": {
+    "type": "",
+    "url": ""
+  },
+  "license": "UNLICENSED",
+  "description": "Rate MegaNet"
+}
