@@ -1,14 +1,7 @@
 angular
   .module('app', [
     'ui.router',
-    'lbServices',
-    'ngTouch',
-    'ui.grid',
-    'ui.grid.pagination',
-    'ui.grid.moveColumns',
-    'ui.grid.expandable',
-    'ui.grid.pinning',
-    'ui.grid.resizeColumns'
+    'lbServices'
   ])
   .config(['$stateProvider', '$urlRouterProvider', function($stateProvider,
       $urlRouterProvider) {
@@ -23,7 +16,7 @@ angular
         templateUrl: 'views/rates/rates.html',
         controller: 'RatesCtrl'
       });
-    $urlRouterProvider.otherwise('location');
+    $urlRouterProvider.otherwise('users');
   }])
   .run(['$rootScope', '$state', function($rootScope, $state) {
     $rootScope.$on('$stateChangeStart', function(event, next) {

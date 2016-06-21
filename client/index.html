@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html class="no-js lt-ie9">
+<html class="no-js lt-ie10">
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <title>MegaNet Rate</title>
+  <meta name="description" content="MegaNet Rate">
+  <meta name="author" content="pixelcave">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
+  <!-- Icons -->
+  <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
+  <link rel="shortcut icon" href="images/favicon.png">
+  <link rel="apple-touch-icon" href="images/icon57.png" sizes="57x57">
+  <link rel="apple-touch-icon" href="images/icon72.png" sizes="72x72">
+  <link rel="apple-touch-icon" href="images/icon76.png" sizes="76x76">
+  <link rel="apple-touch-icon" href="images/icon114.png" sizes="114x114">
+  <link rel="apple-touch-icon" href="images/icon120.png" sizes="120x120">
+  <link rel="apple-touch-icon" href="images/icon144.png" sizes="144x144">
+  <link rel="apple-touch-icon" href="images/icon152.png" sizes="152x152">
+  <link rel="apple-touch-icon" href="images/icon180.png" sizes="180x180">
+  <!-- END Icons -->
+
+  <!-- Stylesheets -->
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
+  <!--date ranger picker -->
+  <link rel="stylesheet" href="vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"/>
+  <link rel="stylesheet" href="vendor/bootstrap-daterangepicker/daterangepicker.css"/>
+  <link rel="stylesheet" href="vendor/bootstrap-daterangepicker/daterangepicker-bs3.css"/>
+  <!-- ui-grid css -->
+  <link rel="stylesheet" href="vendor/angular-ui-grid/ui-grid.css">
+  <!-- Related styles of various icon packs and plugins -->
+  <link rel="stylesheet" href="css/plugins.css">
+  <!-- The main stylesheet of this template. All Bootstrap overwrites are defined in here -->
+  <link rel="stylesheet" href="css/main.css">
+  <!-- Include a specific file here from css/themes/ folder to alter the default theme of the template -->
+  <!-- The themes stylesheet of this template (for using specific theme color in individual elements - must included last) -->
+  <link rel="stylesheet" href="css/themes.css">
+  <!-- END Stylesheets -->
+
+  <!-- Modernizr (browser feature detection library) & Respond.js (enables responsive CSS code on browsers that don't support it, eg IE8) -->
+  <script src="vendor_custom/js/vendor/modernizr-respond.min.js"></script>
+</head>
+<body ng-app="app">
+<div id="page-wrapper" class="page-loading">
+  <!-- Preloader -->
+  <!-- Preloader functionality (initialized in js/app.js) - pageLoading() -->
+  <!-- Used only if page preloader is enabled from inc/config (PHP version) or the class 'page-loading' is added in #page-wrapper element (HTML version) -->
+  <div class="preloader themed-background">
+    <div class="inner">
+      <h3 class="text-light visible-lt-ie9 visible-lt-ie10">
+        <strong>Loading</strong>
+          <div class="spin">
+            <div class="rect1"></div>
+            <div class="rect2"></div>
+            <div class="rect3"></div>
+            <div class="rect4"></div>
+            <div class="rect5"></div>
+          </div>
+      </h3>
+      <div class="preloader-spinner hidden-lt-ie9 hidden-lt-ie10"></div>
+    </div>
+  </div>
+  <!-- END Preloader -->
+
+  <div id="page-container" class="sidebar-partial sidebar-visible-lg sidebar-no-animations">
+    <!-- Main Sidebar -->
+    <div id="sidebar">
+      <!-- Wrapper for scrolling functionality -->
+      <div id="sidebar-scroll">
+        <!-- Sidebar Content -->
+        <div class="sidebar-content">
+          <!-- Brand -->
+          <a href="index.html" class="sidebar-brand" style="text-align:center">
+            <span class="sidebar-nav-mini-hide"><strong>MegaNet</strong></span>
+          </a>
+          <!-- END Brand -->
+
+          <!-- User Info -->
+          <div class="sidebar-section sidebar-user clearfix sidebar-nav-mini-hide">
+            <div class="sidebar-user-avatar">
+              <a>
+                <img src="images/placeholders/avatars/avatar2.jpg" alt="avatar">
+              </a>
+            </div>
+            <div class="sidebar-user-name">John Doe</div>
+            <div class="sidebar-user-links">
+              <!-- Opens the user settings modal that can be found at the bottom of each page (page_footer.html in PHP version) -->
+              <a href="javascript:void(0)" class="enable-tooltip" data-placement="bottom" title="Settings" onclick="$('#modal-user-settings').modal('show');"><i class="gi gi-cogwheel"></i></a>
+              <a href="login.html" data-toggle="tooltip" data-placement="bottom" title="Logout"><i class="gi gi-exit"></i></a>
+            </div>
+          </div>
+          <!-- END User Info -->
+
+          <!-- Theme Colors -->
+          <ul class="sidebar-section sidebar-themes clearfix sidebar-nav-mini-hide">
+            <!-- You can also add the default color theme
+            <li class="active">
+                <a href="javascript:void(0)" class="themed-background-dark-default themed-border-default" data-theme="default" data-toggle="tooltip" title="Default Blue"></a>
+            </li>
+            -->
+            <li>
+              <a href="javascript:void(0)" class="themed-background-dark-night themed-border-night" data-theme="css/themes/night.css" data-toggle="tooltip" title="Night"></a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" class="themed-background-dark-amethyst themed-border-amethyst" data-theme="css/themes/amethyst.css" data-toggle="tooltip" title="Amethyst"></a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" class="themed-background-dark-modern themed-border-modern" data-theme="css/themes/modern.css" data-toggle="tooltip" title="Modern"></a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" class="themed-background-dark-autumn themed-border-autumn" data-theme="css/themes/autumn.css" data-toggle="tooltip" title="Autumn"></a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" class="themed-background-dark-flatie themed-border-flatie" data-theme="css/themes/flatie.css" data-toggle="tooltip" title="Flatie"></a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" class="themed-background-dark-spring themed-border-spring" data-theme="css/themes/spring.css" data-toggle="tooltip" title="Spring"></a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" class="themed-background-dark-fancy themed-border-fancy" data-theme="css/themes/fancy.css" data-toggle="tooltip" title="Fancy"></a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" class="themed-background-dark-fire themed-border-fire" data-theme="css/themes/fire.css" data-toggle="tooltip" title="Fire"></a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" class="themed-background-dark-coral themed-border-coral" data-theme="css/themes/coral.css" data-toggle="tooltip" title="Coral"></a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" class="themed-background-dark-lake themed-border-lake" data-theme="css/themes/lake.css" data-toggle="tooltip" title="Lake"></a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" class="themed-background-dark-forest themed-border-forest" data-theme="css/themes/forest.css" data-toggle="tooltip" title="Forest"></a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" class="themed-background-dark-waterlily themed-border-waterlily" data-theme="css/themes/waterlily.css" data-toggle="tooltip" title="Waterlily"></a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" class="themed-background-dark-emerald themed-border-emerald" data-theme="css/themes/emerald.css" data-toggle="tooltip" title="Emerald"></a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" class="themed-background-dark-blackberry themed-border-blackberry" data-theme="css/themes/blackberry.css" data-toggle="tooltip" title="Blackberry"></a>
+            </li>
+          </ul>
+          <!-- END Theme Colors -->
+
+          <!-- Sidebar Navigation -->
+          <ul class="sidebar-nav">
+            <li>
+              <a href="index.html" class=" active"><i class="gi gi-dashboard sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Dashboard</span></a>
+            </li>
+            <li class="sidebar-header">
+              <span class="sidebar-header-options clearfix"><a href="javascript:void(0)" data-toggle="tooltip" title="Quick Settings"><i class="gi gi-settings"></i></a></span>
+              <span class="sidebar-header-title">Rate Manage</span>
+            </li>
+            <li>
+              <a ui-sref="rates"><i class="gi gi-circle_minus sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Rate</span></a>
+            </li>
+            <li class="sidebar-header">
+              <span class="sidebar-header-options clearfix"><a href="javascript:void(0)" data-toggle="tooltip" title="Quick Settings"><i class="gi gi-settings"></i></a></span>
+              <span class="sidebar-header-title">User Manage</span>
+            </li>
+            <li>
+              <a ui-sref="users"><i class="gi gi-user sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">User</span></a>
+            </li>
+          </ul>
+        </div>
+        <!-- END Sidebar Content -->
+      </div>
+      <!-- END Wrapper for scrolling functionality -->
+    </div>
+    <!-- END Main Sidebar -->
+
+    <!-- Main Container -->
+    <div id="main-container">
+      <!-- Header -->
+      <header class="navbar navbar-default">
+        <!-- Left Header Navigation -->
+        <ul class="nav navbar-nav-custom">
+          <!-- Main Sidebar Toggle Button -->
+          <li>
+            <a href="javascript:void(0)" onclick="App.sidebar('toggle-sidebar');this.blur();">
+              <i class="fa fa-exchange fa-fw"></i>
+            </a>
+          </li>
+          <!-- END Main Sidebar Toggle Button -->
+
+          <!-- Template Options -->
+          <!-- Change Options functionality can be found in js/app.js - templateOptions() -->
+          <li class="dropdown">
+            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="gi gi-settings"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-custom dropdown-options">
+              <li class="dropdown-header text-center">Header Style</li>
+              <li>
+                <div class="btn-group btn-group-justified btn-group-sm">
+                  <a href="javascript:void(0)" class="btn btn-primary" id="options-header-default">Light</a>
+                  <a href="javascript:void(0)" class="btn btn-primary" id="options-header-inverse">Dark</a>
+                </div>
+              </li>
+              <li class="dropdown-header text-center">Page Style</li>
+              <li>
+                <div class="btn-group btn-group-justified btn-group-sm">
+                  <a href="javascript:void(0)" class="btn btn-primary" id="options-main-style">Default</a>
+                  <a href="javascript:void(0)" class="btn btn-primary" id="options-main-style-alt">Alternative</a>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <!-- END Template Options -->
+        </ul>
+        <!-- END Left Header Navigation -->
+
+        <!-- Right Header Navigation -->
+        <ul class="nav navbar-nav-custom pull-right">
+          <!-- User Dropdown -->
+          <li class="dropdown">
+            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+              <img src="images/placeholders/avatars/avatar2.jpg" alt="avatar"> <i class="fa fa-angle-down"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+              <li class="divider"></li>
+              <li>
+                <a href="#modal-user-settings" data-toggle="modal">
+                  <i class="fa fa-cog fa-fw pull-right"></i>
+                  Settings
+                </a>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <a href="login.html"><i class="fa fa-power-off fa-fw pull-right"></i> Logout</a>
+              </li>
+            </ul>
+          </li>
+          <!-- END User Dropdown -->
+        </ul>
+        <!-- END Right Header Navigation -->
+      </header>
+      <!-- END Header -->
+
+      <!-- Page content -->
+      <div id="page-content" ui-view></div>
+      <!-- END Page Content -->
+
+      <!-- Footer -->
+      <footer class="clearfix">
+        <div class="pull-right">
+          Copyright &copy; 2016 by <a href="http://meganet.com.vn/" target="_blank">MegaNet Team</a>
+        </div>
+        <div class="pull-left">
+          <span id="year-copy"></span> &copy; <a href="http://meganet.com.vn/" target="_blank">Version 2.0</a>
+        </div>
+      </footer>
+      <!-- END Footer -->
+    </div>
+    <!-- END Main Container -->
+  </div>
+  <!-- END Page Container -->
+</div>
+<!-- END Page Wrapper -->
+
+<!-- Scroll to top link, initialized in js/app.js - scrollToTop() -->
+<a href="#" id="to-top"><i class="fa fa-angle-double-up"></i></a>
+
+<!-- User Settings, modal which opens from Settings link (found in top right user menu) and the Cog link (found in sidebar user info) -->
+<div id="modal-user-settings" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header text-center">
+        <h2 class="modal-title"><i class="fa fa-pencil"></i> Settings</h2>
+      </div>
+      <!-- END Modal Header -->
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <form action="index.html" method="post" enctype="multipart/form-data" class="form-horizontal form-bordered" onsubmit="return false;">
+          <fieldset>
+            <legend>Vital Info</legend>
+            <div class="form-group">
+              <label class="col-md-4 control-label">Username</label>
+              <div class="col-md-8">
+                <p class="form-control-static">Admin</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="user-settings-email">Email</label>
+              <div class="col-md-8">
+                <input type="email" id="user-settings-email" name="user-settings-email" class="form-control" value="admin@example.com">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="user-settings-notifications">Email Notifications</label>
+              <div class="col-md-8">
+                <label class="switch switch-primary">
+                  <input type="checkbox" id="user-settings-notifications" name="user-settings-notifications" value="1" checked>
+                  <span></span>
+                </label>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Password Update</legend>
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="user-settings-password">New Password</label>
+              <div class="col-md-8">
+                <input type="password" id="user-settings-password" name="user-settings-password" class="form-control" placeholder="Please choose a complex one..">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="user-settings-repassword">Confirm New Password</label>
+              <div class="col-md-8">
+                <input type="password" id="user-settings-repassword" name="user-settings-repassword" class="form-control" placeholder="..and confirm it!">
+              </div>
+            </div>
+          </fieldset>
+          <div class="form-group form-actions">
+            <div class="col-xs-12 text-right">
+              <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-sm btn-primary">Save Changes</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- END Modal Body -->
+    </div>
+  </div>
+</div>
+<!-- END User Settings -->
+
+<!-- Remember to include excanvas for IE8 chart support -->
+<!--[if IE 8]><script src="vendor_custom/js/helpers/excanvas.min.js"></script><![endif]-->
+
+<!-- jQuery, Bootstrap.js, jQuery plugins and Custom JS code -->
+<script src="vendor/jquery/dist/jquery.js"></script>
+<script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="vendor_custom/js/plugins.js"></script>
+<script src="vendor_custom/less/app.js"></script>
+
+<!--highcharts-->
+<script src="vendor/highcharts/highcharts.js"></script>
+
+<!--angular js-->
+<script src="vendor/angular/angular.js"></script>
+<script src="vendor/angular-resource/angular-resource.js"></script>
+<script src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
+
+<!--angular touch&animate&ui-grid-->
+<script src="vendor/angular-touch/angular-touch.js"></script>
+<script src="vendor/angular-animate/angular-animate.js"></script>
+<script src="vendor/angular-ui-grid/ui-grid.js"></script>
+
+<!--date range picker-->
+<script src="vendor/bootstrap-daterangepicker/moment.js"></script>
+<script src="vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+<script src="vendor/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script src="vendor/bootstrap-daterangepicker/ng-bs-daterangepicker.js"></script>
+
+<!-- Main source-->
+<script src="js/app.js"></script>
+<script src="js/services/lb-services.js"></script>
+<script src="views/rates/ratesCtrl.js"></script>
+<script src="views/users/usersCtrl.js"></script>
+</body>
+</html>
