@@ -31,5 +31,25 @@
   "Role": {
     "dataSource": "db",
     "public": false
+  },
+  "ktxUsers": {
+    "dataSource": "mysqlDs",
+    "public": true
+  },
+  "sites": {
+    "dataSource": "mysqlDs",
+    "public": true
+  },
+  "ktxpacks": {
+    "dataSource": "mysqlDs",
+    "public": true
+  },
+  "ktxreport": {
+    "dataSource": "mysqlDs",
+    "public": true
+  },
+  "Auth": {
+    "dataSource": null,
+    "public": true
   }
 }

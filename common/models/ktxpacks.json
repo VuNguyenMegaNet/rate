@@ -1,0 +1,41 @@
+{
+  "name": "ktxpacks",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "code": {
+      "type": "string",
+      "required": true,
+      "collation": "utf8_unicode_ci"
+    },
+    "price": {
+      "type": "number",
+      "required": true
+    },
+    "sold_at": {
+      "type": "date",
+      "required": true
+    },
+    "site_id": {
+      "type": "number",
+      "required": true
+    },
+    "site_name": {
+      "type": "string",
+      "required": true,
+      "collation": "utf8_general_ci"
+    },
+    "plan_name": {
+      "type": "string",
+      "required": true,
+      "collation": "utf8_general_ci"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
