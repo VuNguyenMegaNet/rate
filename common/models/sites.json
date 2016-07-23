@@ -1,0 +1,26 @@
+{
+  "name": "sites",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "String"
+    },
+    "site2_id": {
+      "type": "String"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "ktxUsers": {
+      "type": "hasMany",
+      "model": "ktxUsers",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

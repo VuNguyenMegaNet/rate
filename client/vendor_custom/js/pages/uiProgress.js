@@ -29,25 +29,25 @@ var UiProgress = function() {
             });
 
             /* With NProgress, check out more examples at https://github.com/rstacruz/nprogress */
-            var startBtn    = $('#top-loading-start');
+            var startBtn    = $('.top-loading-start');
             var stopBtn     = $('#top-loading-stop');
 
             // User Bootstrap functionality to disable both buttons just to demostrate one time on page load
-            startBtn.add(stopBtn).button('loading');
+            //startBtn.add(stopBtn).button('loading');
 
             // Start top loading bar and finish after 2,5 seconds just for demostration
             // You could bind NProgress.start() and NProgress.done() to Jquery events ajaxStart and ajaxStop to add progress to your ajax calls :-)
             NProgress.start();
             setTimeout(function(){
                 NProgress.done();
-                startBtn.button('reset');
-            }, 2500);
+            }, 1300);
 
             // On start button click start loading again
             startBtn.on('click', function(){
-                NProgress.start();
-                $(this).button('loading');
-                stopBtn.button('reset');
+              NProgress.start();
+              setTimeout(function(){
+                NProgress.done();
+              }, 600);
             });
 
             // On stop button click stop loading
@@ -63,7 +63,7 @@ var UiProgress = function() {
 
                 $.bootstrapGrowl('<h4>Hi there!</h4> <p>This is another notification!</p>', {
                     type: growlType,
-                    delay: 2500,
+                    delay: 1000,
                     allow_dismiss: true
                 });
 

@@ -1,3 +1,215 @@
-<div style="height:800px">
-  <p>Users</p>
+<div class="block full">
+  <div class="block-title">
+    <h2><strong>Users</strong></h2>
+  </div>
+
+  <div class="table-responsive">
+    <table id="example-datatable" class="table table-vcenter table-condensed table-bordered" datatable="ng">
+      <thead>
+      <tr>
+        <th class="text-center">ID</th>
+        <th class="text-center"><i class="gi gi-user"></i></th>
+        <th>Name</th>
+        <th>Fullname</th>
+        <th>Permissions</th>
+        <th>Sites</th>
+        <th class="text-center">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="u in listusers" id="row">
+        <td class="text-center">{{ u.id }}</td>
+        <td class="text-center"><img src="images/placeholders/avatars/avatar5.jpg" alt="avatar" class="img-circle"></td>
+        <td>{{ u.name }}</td>
+        <td>{{ u.fullname }}</td>
+        <td><span class="label label-success" ng-if=" u.permissions == 1">Admin</span><span class="label label-warning" ng-if="u.permissions  == 2">Personal</span></td>
+        <td class="text-center">{{ u.sites.name }}</td>
+        <td class="text-center">
+          <div class="btn-group">
+            <a href="javascript:void(0)" data-toggle="tooltip" title="Add" class="btn btn-xs btn-primary" ng-if=" u.permissions == 1" onclick="$('#modal-user').modal('show');" ng-click="adduser()"><i class="fa fa-user-plus"></i></a>
+            <a href="javascript:void(0)" data-toggle="tooltip" title="Edit" class="btn btn-xs btn-default" onclick="$('#modal-edit-user').modal('show');" ng-click="edituser(u.id, u.name, u.fullname, u.permissions, u.sites.id)"><i class="fa fa-pencil"></i></a>
+            <a href="javascript:void(0)" data-toggle="tooltip" title="Delete" class="btn btn-xs btn-danger" ng-click="deleteuser(u.id, u.name)"><i class="fa fa-times"></i></a>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
+
+<!--Add User-->
+<div id="modal-user" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header text-center">
+        <h2 class="modal-title header-user"><i class="fa fa-user-plus"></i> Add User</h2>
+      </div>
+      <!-- END Modal Header -->
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <!-- Form Validation Example Content -->
+        <form id="form-validation" class="form-horizontal form-bordered">
+          <fieldset>
+            <legend><i class="fa fa-angle-right"></i> User Info</legend>
+            <div class="form-group first-name">
+              <label class="col-md-4 control-label" for="val_name">Name <span class="text-danger">*</span></label>
+              <div class="col-md-6">
+                <div class="input-group">
+                  <input type="text" id="val_name" name="val_name" class="form-control" placeholder="Your name.." ng-model="auser.name" ng-change="testname(auser.name)">
+                  <span class="input-group-addon"><i class="gi gi-user"></i></span>
+                </div>
+                <div class="animation-slideDown" ng-show="nameerror" style="color: #e74c3c;margin-bottom:0;margin-top: 5px;font-weight: 400">Name exits</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="val_fullname">Fullname <span class="text-danger">*</span></label>
+              <div class="col-md-6">
+                <div class="input-group">
+                  <input type="text" id="val_fullname" name="val_fullname" class="form-control" placeholder="Your fullname" ng-model="auser.fullname">
+                  <span class="input-group-addon"><i class="gi gi-user"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="val_sites">Sites <span class="text-danger">*</span></label>
+              <div class="col-md-6">
+                <select id="val_sites" name="val_sites" class="form-control" ng-model="auser.site" ng-options="site.id as site.name for site in Sites">
+                  <option value="">Please select</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="val_permission">Permission <span class="text-danger">*</span></label>
+              <div class="col-md-6">
+                <select id="val_permission" name="val_permission" class="form-control" ng-model="auser.permission">
+                  <option value="">Please select</option>
+                  <option value="1">Admin</option>
+                  <option value="2">Personal</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="val_password">Password <span class="text-danger">*</span></label>
+              <div class="col-md-6">
+                <div class="input-group">
+                  <input type="password" id="val_password" name="val_password" class="form-control" placeholder="Type password..." ng-model="auser.password">
+                  <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="val_confirm_password">Confirm Password <span class="text-danger">*</span></label>
+              <div class="col-md-6">
+                <div class="input-group">
+                  <input type="password" id="val_confirm_password" name="val_confirm_password" class="form-control" placeholder="Type password confirm...">
+                  <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <div class="form-group form-actions">
+            <div class="col-md-8 col-md-offset-4">
+              <button type="submit" class="btn btn-sm btn-primary submit" disabled="disabled" ng-click="saveadduser()" data-dismiss="modal"><i class="fa fa-arrow-right"></i> Submit</button>
+              <button type="reset" class="btn btn-sm btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+            </div>
+          </div>
+        </form>
+        <!-- END Form Validation Example Content -->
+      </div>
+      <!-- END Modal Body -->
+    </div>
+  </div>
+</div>
+
+<!--Edit User-->
+<div id="modal-edit-user" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header text-center">
+        <h2 class="modal-title header-user"><i class="fa fa-user-plus"></i> Edit User</h2>
+      </div>
+      <!-- END Modal Header -->
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <!-- Form Validation Example Content -->
+        <form id="form-validation-edit" class="form-horizontal form-bordered">
+          <fieldset>
+            <legend><i class="fa fa-angle-right"></i> User Info</legend>
+            <div class="form-group first-name">
+              <label class="col-md-4 control-label" for="val_name_edit">Name <span class="text-danger">*</span></label>
+              <div class="col-md-6">
+                <div class="input-group">
+                  <input type="text" id="val_name_edit" name="val_name_edit" class="form-control" placeholder="Your name.." ng-model="euser.name" ng-change="testnameedit(euser.id, euser.name)">
+                  <span class="input-group-addon"><i class="gi gi-user"></i></span>
+                </div>
+                <div class="animation-slideDown" ng-show="nameerroredit" style="color: #e74c3c;margin-bottom:0;margin-top: 5px;font-weight: 400">Name exits</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="val_fullname_edit">Fullname <span class="text-danger">*</span></label>
+              <div class="col-md-6">
+                <div class="input-group">
+                  <input type="text" id="val_fullname_edit" name="val_fullname_edit" class="form-control" placeholder="Your fullname" ng-model="euser.fullname">
+                  <span class="input-group-addon"><i class="gi gi-user"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="val_sites_edit">Sites <span class="text-danger">*</span></label>
+              <div class="col-md-6">
+                <select id="val_sites_edit" name="val_sites_edit" class="form-control" ng-model="euser.site" ng-options="site.id as site.name for site in Sites">
+                  <option value="">Please select</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="val_permission_edit">Permission <span class="text-danger">*</span></label>
+              <div class="col-md-6">
+                <select id="val_permission_edit" name="val_permission_edit" class="form-control" ng-model="euser.permission">
+                  <option value="">Please select</option>
+                  <option value="1">Admin</option>
+                  <option value="2">Personal</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="val_password_edit">Password <span class="text-danger">*</span></label>
+              <div class="col-md-6">
+                <div class="input-group">
+                  <input type="password" id="val_password_edit" name="val_password_edit" class="form-control" placeholder="Type password..." ng-model="euser.password">
+                  <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="val_confirm_password_edit">Confirm Password <span class="text-danger">*</span></label>
+              <div class="col-md-6">
+                <div class="input-group">
+                  <input type="password" id="val_confirm_password_edit" name="val_confirm_password_edit" class="form-control" placeholder="Type password confirm...">
+                  <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <div class="form-group form-actions">
+            <div class="col-md-8 col-md-offset-4">
+              <button type="submit" class="btn btn-sm btn-primary submit" disabled="disabled" ng-click="saveedituser()" data-dismiss="modal"><i class="fa fa-arrow-right"></i> Submit</button>
+              <button type="reset" class="btn btn-sm btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+            </div>
+          </div>
+        </form>
+        <!-- END Form Validation Example Content -->
+      </div>
+      <!-- END Modal Body -->
+    </div>
+  </div>
+</div>
+
+<!--script-->
+<script src="../../vendor_custom/js/pages/formsValidation.js"></script>
+<script>$(document).ready(function(){ FormsValidation.init(); });</script>
+<script>$(document).ready(function(){ FormsValidation.init2(); });</script>

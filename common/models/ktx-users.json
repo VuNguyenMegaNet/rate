@@ -1,0 +1,45 @@
+{
+  "name": "ktxUsers",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "hidden": [
+    "password",
+    "password_salt"
+  ],
+  "properties": {
+    "name": {
+      "type": "String",
+      "required": true
+    },
+    "fullname": {
+      "type": "String",
+      "required": true,
+      "collation": "utf8_general_ci"
+    },
+    "password": {
+      "type": "String",
+      "required": true
+    },
+    "password_salt": {
+      "type": "String",
+      "required": true
+    },
+    "permissions": {
+      "type": "String",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "sites": {
+      "type": "belongsTo",
+      "model": "sites",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

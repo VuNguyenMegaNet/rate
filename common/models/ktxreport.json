@@ -1,0 +1,32 @@
+{
+  "name": "ktxreport",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "days": {
+      "type": "date",
+      "required": true
+    },
+    "site_id": {
+      "type": "number",
+      "required": true
+    },
+    "site_name": {
+      "type": "string",
+      "required": true,
+      "collation": "utf8_general_ci"
+    },
+    "report": {
+      "type": "Array",
+      "required": true,
+      "collation": "utf8_unicode_ci"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
