@@ -1782,7 +1782,7 @@ only screen and (min-device-pixel-ratio: 1.5) {
     .chosen-container-multi .chosen-choices .search-choice .search-choice-close,
     .chosen-container .chosen-results-scroll-down span,
     .chosen-container .chosen-results-scroll-up span {
-        background-image: url('../img/jquery.chosen/chosen-sprite@2x.png') !important;
+        background-image: url('../images/jquery.chosen/chosen-sprite@2x.png') !important;
         background-size: 52px 37px !important;
         background-repeat: no-repeat !important;
     }
@@ -3067,21 +3067,53 @@ img.mfp-img {
 
 .dataTables_filter label {
     font-weight: normal;
-    float: left;
-    text-align: left;
+}
+
+#example-datatable_length {
+  float: left;
+  width:50%;
+  border-right-width: 0;
+}
+
+#example-datatable_filter {
+  float: right;
+  width:50%;
+  border-top-width: 1px;
+  border-bottom-width: 0;
+  border-left-width: 0;
 }
 
 div.dataTables_length select {
     width: 75px;
+  font-size: 13px;
+  padding: 6px 8px;
+  max-width: 100%;
+  margin: 1px 0;
+  color: #0072C6;
+  border-color: #dbe1e8;
+  border-radius: 4px;
+}
+
+div.dataTables_length label {
+  margin-left:10px;
 }
 
 div.dataTables_filter label {
     font-weight: normal;
-    float: right;
+  float:right;
+  margin-right:10px;
 }
 
 div.dataTables_filter input {
-    width: 150px;
+  font-size: 13px;
+  padding: 7px 8px;
+  max-width: 100%;
+  margin: 1px 0;
+  color: #0072C6;
+  border-color: #dbe1e8;
+  border-radius: 4px;
+  outline: none;
+  border:1px solid #DBE1E8;
 }
 
 .dataTables_info {
@@ -3089,13 +3121,60 @@ div.dataTables_filter input {
 }
 
 .dataTables_paginate {
-    float: right;
     margin: 0;
 }
 
-div.dataTables_paginate ul.pagination {
-    margin: 2px 0;
-    white-space: nowrap;
+.dataTables_paginate>.previous {
+  border:none;
+  margin-left:10px;
+  background-color: #ffffff;
+  border-radius:5px;
+  text-decoration:none;
+  padding: 3px 10px;
+}
+
+.dataTables_paginate>.next {
+  border:none;
+  margin-left:10px;
+  background-color: #ffffff;
+  border-radius:5px;
+  text-decoration:none;
+  padding: 3px 20px;
+  cursor:pointer;
+}
+
+.paginate_button {
+  border:none;
+  margin-left:10px;
+  background-color: #ffffff;
+  border-radius:25px;
+  text-decoration:none;
+  padding: 3px 20px;
+  cursor:pointer;
+}
+
+.ellipsis {
+  margin-left:10px;
+}
+
+.paginate_button:hover {
+  font-weight:bold;
+  text-decoration:none;
+  background-color: #1BBAE1;
+  color:#ffffff;
+}
+
+span>.current {
+  background-color: #1BBAE1;
+  color:#ffffff;
+}
+
+.dataTables_paginate>.disabled,
+.dataTables_paginate>.disabled:hover {
+  color: #777;
+  background-color: #fff;
+  border-color: #ddd;
+  cursor: not-allowed;
 }
 
 table.dataTable td,
@@ -3132,11 +3211,11 @@ table.table thead .sorting_desc_disabled {
     background-size: 19px 19px;
 }
 
-.table thead .sorting { background-image: url('../img/jquery.datatables/sort_both.png'); }
-.table thead .sorting_asc { background-image: url('../img/jquery.datatables/sort_asc.png'); }
-.table thead .sorting_desc { background-image: url('../img/jquery.datatables/sort_desc.png'); }
-.table thead .sorting_asc_disabled { background-image: url('../img/jquery.datatables/sort_asc_disabled.png'); }
-.table thead .sorting_desc_disabled { background-image: url('../img/jquery.datatables/sort_desc_disabled.png'); }
+.table thead .sorting { background-image: url('../images/jquery.datatables/sort_both.png'); }
+.table thead .sorting_asc { background-image: url('../images/jquery.datatables/sort_asc.png'); }
+.table thead .sorting_desc { background-image: url('../images/jquery.datatables/sort_desc.png'); }
+.table thead .sorting_asc_disabled { background-image: url('../images/jquery.datatables/sort_asc_disabled.png'); }
+.table thead .sorting_desc_disabled { background-image: url('../images/jquery.datatables/sort_desc_disabled.png'); }
 
 table.dataTable thead > tr > th {
     padding-left: 18px;
@@ -3184,11 +3263,11 @@ only screen and (-moz-min-device-pixel-ratio: 1.5),
 only screen and (-o-min-device-pixel-ratio: 3/2),
 only screen and (min-device-pixel-ratio: 1.5) {
 
-    .table thead .sorting { background-image: url('../img/jquery.datatables/sort_both@2x.png'); }
-    .table thead .sorting_asc { background-image: url('../img/jquery.datatables/sort_asc@2x.png'); }
-    .table thead .sorting_desc { background-image: url('../img/jquery.datatables/sort_desc@2x.png'); }
-    .table thead .sorting_asc_disabled { background-image: url('../img/jquery.datatables/sort_asc_disabled@2x.png'); }
-    .table thead .sorting_desc_disabled { background-image: url('../img/jquery.datatables/sort_desc_disabled@2x.png'); }
+    .table thead .sorting { background-image: url('../images/jquery.datatables/sort_both@2x.png'); }
+    .table thead .sorting_asc { background-image: url('../images/jquery.datatables/sort_asc@2x.png'); }
+    .table thead .sorting_desc { background-image: url('../images/jquery.datatables/sort_desc@2x.png'); }
+    .table thead .sorting_asc_disabled { background-image: url('../images/jquery.datatables/sort_asc_disabled@2x.png'); }
+    .table thead .sorting_desc_disabled { background-image: url('../images/jquery.datatables/sort_desc_disabled@2x.png'); }
 }
 
 /*
