@@ -1,5 +1,5 @@
 {
-  "name": "Rate MegaNet",
+  "name": "RateMegaNet",
   "version": "1.0.0",
   "main": "server/server.js",
   "scripts": {
@@ -29,5 +29,5 @@
     "url": ""
   },
   "license": "UNLICENSED",
-  "description": "Rate MegaNet"
+  "description": "RateMegaNet"
 }
