@@ -32,6 +32,18 @@
     "dataSource": "db",
     "public": false
   },
+  "ktxrate": {
+    "dataSource": "mysqlDs",
+    "public": true
+  },
+  "plans": {
+    "dataSource": "mysqlDs",
+    "public": true
+  },
+  "sites": {
+    "dataSource": "mysqlDs",
+    "public": true
+  },
   "ktxUsers": {
     "dataSource": "mysqlDs",
     "public": true
