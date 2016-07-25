@@ -34,7 +34,7 @@ angular
           site: 465
         };
       }
-      console.log("siteId login: " + $scope.dash.site);
+      console.log("siteId: " + $scope.dash.site);
     };
 
     new checkSite();
@@ -129,9 +129,9 @@ angular
 
     getPage($scope.dates, $scope.dash.site);
 
-    $scope.gridtab = true;
-    $('.Chart-view').removeClass('active');
-    $('.Grid-view').addClass('active');
+    $scope.gridtab = false;
+    $('.Chart-view').addClass('active');
+    $('.Grid-view').removeClass('active');
 
     $scope.clickgrid = function() {
       $scope.gridtab = true;
@@ -442,9 +442,9 @@ angular
 
     ///////////////////interactive////////////////////
     /////////////////////////////////////////////////
-    $('#detail_chart').css('background-color','rgba(128,128,128,0.2)');
-    $('#detailChart').css('display','');
-    $('#summaryChart').css('display','none');
+    $('#summary_chart').css('background-color','rgba(128,128,128,0.2)');
+    $('#summaryChart').css('display','');
+    $('#detailChart').css('display','none');
 
     $('#summary_chart').click(function() {
       $('#summaryChart').css('display','');
@@ -462,11 +462,11 @@ angular
       initDetailChart($scope.chartSeries);
     });
 
-    $scope.render = "render_chart_rate";
-    $scope.nameChart = "Total Pack";
-    $('#tab-pack a').css({'color':'#00508B','font-weight':'bold'});
-    $('#render_chart_rate').css('display','');
-    $('#render_chart_income').css('display','none');
+    $scope.render = "render_chart_income";
+    $scope.nameChart = "Total Income";
+    $('#tab-income a').css({'color':'#00508B','font-weight':'bold'});
+    $('#render_chart_income').css('display','');
+    $('#render_chart_rate').css('display','none');
 
     $('#tab-pack').click(function() {
       $scope.render = "render_chart_rate";

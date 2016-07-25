@@ -58,7 +58,7 @@ gulp.task('watch', function() {
 
 gulp.task('autoload', [], function() {
   browserSync.init(null, {
-    proxy: "http://localhost:3000",
+    proxy: "http://localhost:3500",
     files: ["./client"],
     port: 8000,
   });
