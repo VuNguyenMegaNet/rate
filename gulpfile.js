@@ -68,8 +68,8 @@ gulp.task('autoload', [], function() {
 
 gulp.task('default', [
   'js',
-  'watch',
-  'autoload'
+  'watch'
+  //'autoload'
 ]);
 
 

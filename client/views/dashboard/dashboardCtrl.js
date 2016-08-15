@@ -1,8 +1,8 @@
 angular
   .module('app')
-  .controller('DashboardCtrl', ['$scope', '$rootScope', '$filter', 'Ktxpacks', 'Ktxreport', '$q', function($scope, $rootScope, $filter, Ktxpacks, Ktxreport, $q) {
+  .controller('DashboardCtrl', ['$scope', '$rootScope', '$filter', 'Ktxpacks', 'Ktxreport', 'Sites', '$q', function($scope, $rootScope, $filter, Ktxpacks, Ktxreport, Sites, $q) {
     $scope.dates = {
-      startDate: moment().startOf('day').format("YYYY-MM-DD HH:mm:ss"),
+      startDate: moment().subtract(7, 'days').startOf('day').format("YYYY-MM-DD HH:mm:ss"),
       endDate: moment().endOf('day').format("YYYY-MM-DD HH:mm:ss")
     };
     $scope.ranges = {
@@ -24,17 +24,66 @@ angular
       getDateChart($scope.dates, $scope.dash.site, $scope.render, $scope.nameChart);
     };
 
+    function callSites() {
+      Sites
+        .find({
+          filter: {
+            fields: {
+              name: true,
+              id: true
+            },
+            where: {
+              site2_id : '10'
+            }
+          }
+        })
+        .$promise
+        .then(function(sites) {
+          $rootScope.Sites = sites;
+        }, function(err) {
+          console.log(err);
+        });
+    };
+
+    function callSitesEdit(idGet) {
+      Sites
+        .find({
+          filter: {
+            fields: {
+              name: true,
+              id: true
+            },
+            where: {
+              site2_id : '10',
+              id: { inq: idGet }
+            }
+          }
+        })
+        .$promise
+        .then(function(sites) {
+          $rootScope.Sites = sites;
+        }, function(err) {
+          console.log(err);
+        });
+    };
+
     var checkSite = function() {
       if($rootScope.securityInfo.current_user.permissions == 2) {
         $scope.dash = {
-          site: $rootScope.securityInfo.current_user.sitesId
+          site: $rootScope.securityInfo.current_user.sitesId[0].id
         };
+        var inq = $rootScope.securityInfo.current_user.sitesId;
+        var Ainq = [];
+        inq.forEach(function(item) {
+          Ainq.push(item.id);
+        });
+        callSitesEdit(Ainq);
       }else {
+        callSites();
         $scope.dash = {
           site: 465
         };
       }
-      console.log("siteId: " + $scope.dash.site);
     };
 
     new checkSite();
@@ -52,6 +101,7 @@ angular
       enableGridMenu: true,
       fastWatch: true,
       onRegisterApi: function (gridApi) {
+        $scope.gridApi = gridApi;
         gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
           paginationOptions.pageNumber = newPage;
           paginationOptions.pageSize = pageSize;
@@ -65,10 +115,10 @@ angular
 
     $scope.gridOptions.columnDefs =  [
       { name:'code', width:'20%', pinnedLeft:true, headerCellClass: 'colorHeader' },
-      { name:'price', headerCellClass: 'colorHeader'  },
+      { name:'price', headerCellClass: 'colorHeader' },
       { name:'site', field: 'site_name', width:150, headerCellClass: 'colorHeader'  },
       { name:'plan', field: 'plan_name', width:150, headerCellClass: 'colorHeader' },
-      { name:'sold at', field:'sold_at', width:150, headerCellClass: 'colorHeader' }
+      { name:'sold at', field:'sold_at', headerCellClass: 'colorHeader', width: 150 }
     ];
 
     var getPage = function(date, site) {
@@ -97,9 +147,10 @@ angular
         }).$promise
         .then(function(packs) {
           packs.forEach(function(item) {
+            //var pRice = ;
             $scope.data.push({
               code: item.code,
-              price: item.price,
+              price: item.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"),
               site_name: item.site_name,
               plan_name: item.plan_name,
               sold_at: moment(item.sold_at).format("DD/MM, HH:mm")
@@ -137,6 +188,7 @@ angular
       $scope.gridtab = true;
       $('.Chart-view').removeClass('active');
       $('.Grid-view').addClass('active');
+      $scope.gridApi.core.handleWindowResize();
       getPage($scope.dates, $scope.dash.site);
     };
 
@@ -467,6 +519,7 @@ angular
     $('#tab-income a').css({'color':'#00508B','font-weight':'bold'});
     $('#render_chart_income').css('display','');
     $('#render_chart_rate').css('display','none');
+    getDateChart($scope.dates, $scope.dash.site, $scope.render, $scope.nameChart);
 
     $('#tab-pack').click(function() {
       $scope.render = "render_chart_rate";

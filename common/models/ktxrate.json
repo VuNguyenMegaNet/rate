@@ -13,14 +13,15 @@
       "type": "number"
     },
     "site_name": {
-      "type": "string"
+      "type": "string",
+      "collation": "utf8_general_ci"
     },
     "plan_name": {
       "type": "string"
     },
     "type": {
       "type": "string",
-      "default":"Percent"
+      "default": "Percent"
     },
     "value": {
       "type": "string",

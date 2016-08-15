@@ -57,7 +57,7 @@ var FormsValidation = function() {
                         required: true
                     },
                     val_sites: {
-                      required: true
+                      required: false
                     },
                     val_permission: {
                       required: true
@@ -195,7 +195,7 @@ var FormsValidation = function() {
               required: true
             },
             val_sites_edit: {
-              required: true
+              required: false
             },
             val_permission_edit: {
               required: true
@@ -317,13 +317,13 @@ var FormsValidation = function() {
               required: true,
               email: true
             },
-            val_password_edit: {
+            val_password_edit_area: {
               required: true,
               minlength: 5
             },
-            val_confirm_password_edit: {
+            val_confirm_password_edit_area: {
               required: true,
-              equalTo: '#val_password_edit'
+              equalTo: '#val_password_edit_area'
             },
             val_bio: {
               required: true,
@@ -368,11 +368,11 @@ var FormsValidation = function() {
               minlength: 'Your fullname must consist of at least 3 characters'
             },
             val_email: 'Please enter a valid email address',
-            val_password_edit: {
+            val_password_edit_area: {
               required: 'Please provide a password',
               minlength: 'Your password must be at least 5 characters long'
             },
-            val_confirm_password_edit: {
+            val_confirm_password_edit_area: {
               required: 'Please provide a password',
               minlength: 'Your password must be at least 5 characters long',
               equalTo: 'Please enter the same password as above'

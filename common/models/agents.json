@@ -1,16 +1,18 @@
 {
-  "name": "sites",
+  "name": "agents",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "name": {
-      "type": "String"
+    "id": {
+      "type": "number",
+      "required": true
     },
-    "site2_id": {
-      "type": "String"
+    "site3_id": {
+      "type": "number",
+      "required": true
     }
   },
   "validations": [],

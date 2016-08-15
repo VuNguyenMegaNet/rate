@@ -48,10 +48,6 @@
     "dataSource": "mysqlDs",
     "public": true
   },
-  "sites": {
-    "dataSource": "mysqlDs",
-    "public": true
-  },
   "ktxpacks": {
     "dataSource": "mysqlDs",
     "public": true
@@ -62,6 +58,14 @@
   },
   "Auth": {
     "dataSource": null,
+    "public": true
+  },
+  "packs": {
+    "dataSource": "mysqlDs",
+    "public": true
+  },
+  "agents": {
+    "dataSource": "mysqlDs",
     "public": true
   }
 }

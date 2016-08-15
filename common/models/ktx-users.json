@@ -30,16 +30,15 @@
     "permissions": {
       "type": "String",
       "required": true
+    },
+    "sitesId": {
+      "type": "Array",
+      "default": [],
+      "collation": "utf8_unicode_ci"
     }
   },
   "validations": [],
-  "relations": {
-    "sites": {
-      "type": "belongsTo",
-      "model": "sites",
-      "foreignKey": ""
-    }
-  },
+  "relations": {},
   "acls": [],
   "methods": {}
 }

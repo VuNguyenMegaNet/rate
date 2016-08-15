@@ -109,8 +109,8 @@ angular
       });
 
     $scope.editUserArea = function() {
-      $('#val_password_edit').val("");
-      $('#val_confirm_password_edit').val("");
+      $('#val_password_edit_area').val("");
+      $('#val_confirm_password_edit_area').val("");
       $('button.submit').prop('disabled', "disabled");
     };
 

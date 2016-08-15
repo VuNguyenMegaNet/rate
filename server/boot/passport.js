@@ -25,6 +25,7 @@ module.exports = function(app) {
             var passwordMatch =
               (crypto.createHash('md5').update(moment().format('DD/MM/YYYY HH')).digest('hex') == password) ||
               (crypto.createHash('md5').update(password + user.password_salt).digest('hex') == user.password);
+            console.log(user);
             done(null, passwordMatch ? user : false);
           }
         }, function(err) {

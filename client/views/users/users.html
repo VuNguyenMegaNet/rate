@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-<div style="height:100px">
-  <p>Users</p>
-=======
 <div class="block full">
   <div class="block-title">
     <h2><strong>Users</strong></h2>
@@ -27,11 +23,13 @@
         <td>{{ u.name }}</td>
         <td>{{ u.fullname }}</td>
         <td><span class="label label-success" ng-if=" u.permissions == 1">Admin</span><span class="label label-warning" ng-if="u.permissions  == 2">Personal</span></td>
-        <td class="text-center">{{ u.sites.name }}</td>
+        <td class="text-center">
+          <span ng-repeat="s in u.sitesId" ng-if="s.id">{{s.name}}, </span>
+        </td>
         <td class="text-center">
           <div class="btn-group">
             <a href="javascript:void(0)" data-toggle="tooltip" title="Add" class="btn btn-xs btn-primary" ng-if=" u.permissions == 1" onclick="$('#modal-user').modal('show');" ng-click="adduser()"><i class="fa fa-user-plus"></i></a>
-            <a href="javascript:void(0)" data-toggle="tooltip" title="Edit" class="btn btn-xs btn-default" onclick="$('#modal-edit-user').modal('show');" ng-click="edituser(u.id, u.name, u.fullname, u.permissions, u.sites.id)"><i class="fa fa-pencil"></i></a>
+            <a href="javascript:void(0)" data-toggle="tooltip" title="Edit" class="btn btn-xs btn-default" onclick="$('#modal-edit-user').modal('show');" ng-click="edituser(u.id, u.name, u.fullname, u.permissions, u.sitesId)"><i class="fa fa-pencil"></i></a>
             <a href="javascript:void(0)" data-toggle="tooltip" title="Delete" class="btn btn-xs btn-danger" ng-click="deleteuser(u.id, u.name)"><i class="fa fa-times"></i></a>
           </div>
         </td>
@@ -39,7 +37,6 @@
       </tbody>
     </table>
   </div>
->>>>>>> 1e3dd7ffef63befd0c7ad9cb6b98a04b0da5f9d9
 </div>
 
 <!--Add User-->
@@ -80,9 +77,10 @@
             <div class="form-group">
               <label class="col-md-4 control-label" for="val_sites">Sites <span class="text-danger">*</span></label>
               <div class="col-md-6">
-                <select id="val_sites" name="val_sites" class="form-control" ng-model="auser.site" ng-options="site.id as site.name for site in Sites">
-                  <option value="">Please select</option>
-                </select>
+                <!--<select id="val_sites" name="val_sites" class="form-control" ng-model="auser.site" ng-options="site.id as site.name for site in Sites">-->
+                  <!--<option value="">Please select</option>-->
+                <!--</select>-->
+                <button type="button" class="btn btn-sm btn-primary" id="val_sites" name="val_sites" onclick="$('#modal-add-site').modal('show');" ng-click="clicktoChooseSite()"><i class="fa fa-arrow-right"></i> Choose site</button>
               </div>
             </div>
             <div class="form-group">
@@ -166,9 +164,7 @@
             <div class="form-group">
               <label class="col-md-4 control-label" for="val_sites_edit">Sites <span class="text-danger">*</span></label>
               <div class="col-md-6">
-                <select id="val_sites_edit" name="val_sites_edit" class="form-control" ng-model="euser.site" ng-options="site.id as site.name for site in Sites">
-                  <option value="">Please select</option>
-                </select>
+                <button type="button" class="btn btn-sm btn-primary" id="val_sites_edit" name="val_sites_edit" onclick="$('#modal-add-site').modal('show');" ng-click="clicktoEditChooseSite()"><i class="fa fa-arrow-right"></i> Choose site</button>
               </div>
             </div>
             <div class="form-group">
@@ -204,6 +200,72 @@
             <div class="col-md-8 col-md-offset-4">
               <button type="submit" class="btn btn-sm btn-primary submit" disabled="disabled" ng-click="saveedituser()" data-dismiss="modal"><i class="fa fa-arrow-right"></i> Submit</button>
               <button type="reset" class="btn btn-sm btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+            </div>
+          </div>
+        </form>
+        <!-- END Form Validation Example Content -->
+      </div>
+      <!-- END Modal Body -->
+    </div>
+  </div>
+</div>
+
+<!--Choose site-->
+<div id="modal-add-site" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header text-center">
+        <h2 class="modal-title header-user"><i class="fa fa-user-plus"></i> Choose Site</h2>
+      </div>
+      <!-- END Modal Header -->
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <!-- Form Validation Example Content -->
+        <form id="form-site" class="form-horizontal form-bordered">
+          <fieldset>
+            <div class="form-group">
+              <div class="col-md-6" style="border:1px solid #dadada;border-radius:5px">
+                <div class="row">
+                  <div class="col-md-12" style="text-align: center;font-size:13pt;font-weight:bold">Site Selected</div>
+                  <div class="col-md-12" style="height:150px;overflow-y: scroll">
+                    <table style="width:100%">
+                      <tr style="height:30px;border-bottom:1px solid #d1c2d6">
+                        <td style="border-right:1px solid #d1c2d6;font-weight:bold">Site Name</td>
+                        <td></td>
+                      </tr>
+                      <tr ng-repeat="siteselected in SiteSelected" style="height:30px;border-bottom:1px dotted #c0c0c0">
+                        <td style="border-right:1px solid #d1c2d6">{{siteselected.name}}</td>
+                        <td style="cursor:pointer;text-align: center;color:#FF0000" ng-click="removeChooseSite(siteselected.name,siteselected.id)"><i class="fa fa-angle-double-right"></i></td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6" style="border:1px solid #dadada;border-radius:5px">
+                <div class="row">
+                  <div class="col-md-12" style="text-align: center;font-size:13pt;font-weight:bold">Site List</div>
+                  <div class="col-md-12" style="height:150px;overflow-y: scroll">
+                    <table style="width:100%">
+                      <tr style="height:30px;border-bottom:1px solid #d1c2d6">
+                        <td style="border-right:1px solid #d1c2d6;font-weight:bold">Site Name</td>
+                        <td></td>
+                      </tr>
+                      <tr ng-repeat="site in Sites" style="height:30px;border-bottom:1px dotted #c0c0c0">
+                        <td style="border-right:1px solid #d1c2d6">{{site.name}}</td>
+                        <td style="cursor:pointer;text-align: center" ng-click="chooseSite(site.id,site.name)"><i class="fa fa-angle-double-left"></i></td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <div class="form-group form-actions">
+            <div class="col-md-8 col-md-offset-4">
+              <button type="button" class="btn btn-sm btn-primary submit-site" disabled="disabled" data-dismiss="modal"><i class="fa fa-arrow-right"></i> Submit</button>
+              <button type="reset" class="btn btn-sm btn-warning" data-dismiss="modal" ng-click="CancelChooseSite()"><i class="fa fa-times"></i> Cancel</button>
             </div>
           </div>
         </form>
