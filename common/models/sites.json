@@ -14,13 +14,7 @@
     }
   },
   "validations": [],
-  "relations": {
-    "ktxUsers": {
-      "type": "hasMany",
-      "model": "ktxUsers",
-      "foreignKey": ""
-    }
-  },
+  "relations": {},
   "acls": [],
   "methods": {}
 }

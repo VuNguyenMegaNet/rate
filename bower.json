@@ -29,6 +29,7 @@
     "angular-touch": "^1.5.6",
     "angular-animate": "^1.5.6",
     "angular-datatables": "^0.5.4",
-    "push.js": "^0.0.9"
+    "push.js": "^0.0.9",
+    "jquery": "^2.2.4"
   }
 }

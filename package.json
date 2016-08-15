@@ -1,5 +1,5 @@
 {
-  "name": "Rate MegaNet",
+  "name": "RateMegaNet",
   "version": "1.0.0",
   "main": "server/server.js",
   "scripts": {
@@ -9,16 +9,19 @@
   },
   "dependencies": {
     "async": "^2.0.0-rc.4",
+    "bluebird": "^3.4.1",
+    "body-parser": "^1.15.2",
     "compression": "^1.6.2",
     "cookie-parser": "^1.4.3",
     "cors": "^2.5.2",
+    "cron": "^1.1.0",
     "crypto-js": "^3.1.6",
     "express-session": "^1.13.0",
     "helmet": "^2.1.1",
     "loopback": "^2.29.0",
     "loopback-boot": "^2.18.1",
     "loopback-component-explorer": "^2.5.0",
-    "loopback-connector-mysql": "^2.2.1",
+    "loopback-connector-mysql": "^2.3.0",
     "loopback-datasource-juggler": "^2.39.0",
     "moment": "^2.13.0",
     "passport": "^0.3.2",
@@ -34,12 +37,10 @@
     "gulp-compass": "^2.1.0",
     "gulp-concat": "^2.6.0",
     "gulp-connect": "^4.2.0",
-    "gulp-jshint": "^2.0.1",
     "gulp-livereload": "^3.8.1",
     "gulp-minify-css": "^1.2.4",
     "gulp-nodemon": "^2.1.0",
     "gulp-uglify": "^1.5.4",
-    "jshint": "^2.5.6",
     "nsp": "^2.1.0"
   },
   "repository": {
@@ -47,5 +48,5 @@
     "url": ""
   },
   "license": "UNLICENSED",
-  "description": "Rate MegaNet"
+  "description": "RateMegaNet"
 }

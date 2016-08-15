@@ -1,0 +1,35 @@
+{
+  "name": "ktxrate",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "site_id": {
+      "type": "number"
+    },
+    "plan_id": {
+      "type": "number"
+    },
+    "site_name": {
+      "type": "string",
+      "collation": "utf8_general_ci"
+    },
+    "plan_name": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "default": "Percent"
+    },
+    "value": {
+      "type": "string",
+      "default": "{\"Percent\":100, \"Number\":0, \"Exchange\":{\"to\":\"\",\"value\":\"\"}}"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

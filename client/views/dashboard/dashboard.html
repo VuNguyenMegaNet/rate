@@ -1,6 +1,6 @@
 <div class="block full">
   <div class="row">
-    <div class="col-md-12" ng-show="securityInfo.current_user.permissions == 1">
+    <div class="col-md-12">
       <div class="block full">
         <div class="block-title">
           <h2><strong>Choose Site</strong></h2>
@@ -27,8 +27,8 @@
             </div>
           </div>
           <ul class="nav nav-tabs" data-toggle="tabs">
-            <li class="Grid-view" title="Grid View" ng-click="clickgrid()"><a href="javascript:void(0)"><i class="gi gi-table"></i></a></li>
             <li class="Chart-view" ng-click="clickchart()"><a href="javascript:void(0)" title="Chart View"><i class="gi gi-charts"></i></a></li>
+            <li class="Grid-view" title="Grid View" ng-click="clickgrid()"><a href="javascript:void(0)"><i class="gi gi-table"></i></a></li>
           </ul>
         </div>
         <!-- END Block Tabs Title -->
@@ -43,10 +43,10 @@
             <div id="summary_chart" style="display:inline-block;width:50px;height:40px;line-height:40px;text-align:center;cursor:pointer"><a href="javascript:void(0)" title="Summary Report"><i class="fa fa-pie-chart" style="font-size:20px"></i></a></div>
             <div id="detail_chart" style="display:inline-block;width:50px;height:40px;line-height:40px;text-align:center;cursor:pointer"><a href="javascript:void(0)" title="Detail Report"><i class="fa fa-bar-chart" style="font-size:20px"></i></a></div>
             <div id="summaryChart" style="margin-top:10px;width:100%">
-              <div id="tab-pack"><a href="javascript:void(0)" title="Pack" style="text-decoration:none"><i class="fa fa-credit-card" style="font-size:18px"></i><span style="padding-left:10px">PACK</span></a></div>
-              <div id="tab-income" style="margin-top:10px"><a href="javascript:void(0)" title="Income" style="text-decoration:none"><i class="fa fa-money" style="font-size:18px"></i><span style="padding-left:10px">INCOME</span></a></div>
-              <div id="render_chart_rate"></div>
+              <div id="tab-income"><a href="javascript:void(0)" title="Income" style="text-decoration:none"><i class="fa fa-money" style="font-size:18px"></i><span style="padding-left:10px">INCOME</span></a></div>
+              <div id="tab-pack" style="margin-top:10px"><a href="javascript:void(0)" title="Pack" style="text-decoration:none"><i class="fa fa-credit-card" style="font-size:18px"></i><span style="padding-left:10px">PACK</span></a></div>
               <div id="render_chart_income"></div>
+              <div id="render_chart_rate"></div>
             </div>
             <div id="detailChart" style="margin-top:10px;width:100%"></div>
           </div>

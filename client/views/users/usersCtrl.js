@@ -8,15 +8,125 @@ angular
           fields: {
             password: false,
             password_salt: false
-          },
-          include: [
-            'sites'
-          ]
+          }
         }
       }).$promise
         .then(function(users) {
           $scope.listusers = users;
         });
+
+      function callSites() {
+        Sites
+          .find({
+            filter: {
+              fields: {
+                name: true,
+                id: true
+              },
+              where: {
+                site2_id : '10'
+              }
+            }
+          })
+          .$promise
+          .then(function(sites) {
+            $rootScope.Sites = sites;
+          }, function(err) {
+            console.log(err);
+          });
+      };
+
+      function callSitesEdit(idNot) {
+        Sites
+          .find({
+            filter: {
+              fields: {
+                name: true,
+                id: true
+              },
+              where: {
+                site2_id : '10',
+                id: { nin: idNot }
+              }
+            }
+          })
+          .$promise
+          .then(function(sites) {
+            $rootScope.Sites = sites;
+          }, function(err) {
+            console.log(err);
+          });
+      };
+
+      $scope.clicktoChooseSite = function() {
+        setInterval(function() {
+          if($scope.SiteSelected.length > 0) {
+            $('button.submit-site').prop('disabled', "");
+          }else {
+            $('button.submit-site').prop('disabled', "disabled");
+          }
+        },300);
+        $scope.SiteSelected = [];
+        callSites();
+      };
+
+      $scope.clicktoEditChooseSite = function() {
+        setInterval(function() {
+          if($scope.SiteSelected.length > 0) {
+            $('button.submit-site').prop('disabled', "");
+          }else {
+            $('button.submit-site').prop('disabled', "disabled");
+          }
+        },300);
+        $scope.SiteSelected = $scope.euser.site;
+        var idNotIn = [];
+        $scope.euser.site.forEach(function(item) {
+          if(!item.id) {
+            idNotIn = [];
+          }else {
+            idNotIn.push(item.id);
+          }
+        });
+        if(idNotIn.length > 0) { callSitesEdit(idNotIn); }else {
+          callSites();
+        }
+      };
+
+      $scope.CancelChooseSite = function() {
+        KtxUsers.find({
+          filter: {
+            fields: {
+              password: false,
+              password_salt: false
+            }
+          }
+        }).$promise
+          .then(function(users) {
+            $scope.listusers = users;
+          });
+      };
+
+      $scope.chooseSite = function(id, name) {
+        $scope.SiteSelected.push({"id":id,"name":name});
+        var index = _.findIndex($rootScope.Sites, function(item){
+          return item.id == id;
+        });
+
+        if(index >= 0) {
+          $rootScope.Sites.splice(index, 1);
+        }
+      };
+
+      $scope.removeChooseSite = function(name, id) {
+        var index = _.findIndex($scope.SiteSelected, function(item){
+          return item.id == id;
+        });
+
+        if(index >= 0) {
+          $scope.SiteSelected.splice(index, 1);
+        }
+        $rootScope.Sites.push({name: name, id: id});
+      };
 
       /////////////////////////EDIT USER///////////////////////////////////
       //////////////////////////////////////////////////////////////////////
@@ -44,7 +154,6 @@ angular
           if(($scope.euser.name != "superadmin") && ($scope.euser.id == "1")) {
             $scope.Notify("This name user not allow update","error");
           }else {
-            $scope.sitesId = "";
             KtxUsers
               .upsert({
                 id: $scope.euser.id,
@@ -53,7 +162,7 @@ angular
                 password: pass,
                 password_salt: salt,
                 permissions: $scope.euser.permission,
-                sitesId: $scope.sitesId
+                sitesId: []
               })
               .$promise
               .then(function(data) {
@@ -64,10 +173,7 @@ angular
                     fields: {
                       password: false,
                       password_salt: false
-                    },
-                    include: [
-                      'sites'
-                    ]
+                    }
                   }
                 }).$promise
                   .then(function(users) {
@@ -79,43 +185,43 @@ angular
           }
         }else {
           if($scope.euser.name == "superadmin" && $scope.euser.id == "1") {
+            $scope.listusers[0].sitesId = [];
             $scope.Notify("This user not allow update","error");
           }else {
-            $scope.sitesId = $scope.euser.site;
-            KtxUsers
-              .upsert({
-                id: $scope.euser.id,
-                name: $scope.euser.name,
-                fullname: $scope.euser.fullname,
-                password: pass,
-                password_salt: salt,
-                permissions: $scope.euser.permission,
-                sitesId: $scope.sitesId
-              })
-              .$promise
-              .then(function(data) {
-                $scope.Notify("This user updated success","success");
-
-                KtxUsers.find({
-                  filter: {
-                    fields: {
-                      password: false,
-                      password_salt: false
-                    },
-                    include: [
-                      'sites'
-                    ]
-                  }
-                }).$promise
-                  .then(function(users) {
-                    $scope.listusers = users;
-                  });
-              }, function(err) {
-                $scope.Notify("Error when update user","error");
-              });
+            if($scope.SiteSelected.length <= 0) {
+              $scope.Notify("Let choose sites","error");
+            }else {
+              KtxUsers
+                .upsert({
+                  id: $scope.euser.id,
+                  name: $scope.euser.name,
+                  fullname: $scope.euser.fullname,
+                  password: pass,
+                  password_salt: salt,
+                  permissions: $scope.euser.permission,
+                  sitesId: $scope.SiteSelected
+                })
+                .$promise
+                .then(function(data) {
+                  KtxUsers.find({
+                    filter: {
+                      fields: {
+                        password: false,
+                        password_salt: false
+                      }
+                    }
+                  }).$promise
+                    .then(function(users) {
+                      $scope.listusers = users;
+                    });
+                  $scope.Notify("This user updated success","success");
+                }, function(err) {
+                  $scope.Notify("Error when update user","error");
+                });
+            }
           }
         }
-      }
+      };
 
       $scope.testnameedit = function(id, value) {
         $scope.nameerroredit = false;
@@ -154,15 +260,13 @@ angular
         var pass = (MD5($scope.auser.password + salt));
 
         if($scope.auser.permission == 1) {
-          $scope.sitesId = "";
           KtxUsers
             .create({
               name: $scope.auser.name,
               fullname: $scope.auser.fullname,
               password: pass,
               password_salt: salt,
-              permissions: $scope.auser.permission,
-              sitesId: $scope.sitesId
+              permissions: $scope.auser.permission
             }).$promise
             .then(function(data) {
               $scope.listusers.push(data);
@@ -172,36 +276,26 @@ angular
               $scope.Notify("Error when add user","error");
             });
         }else {
-          $scope.sitesId = $scope.auser.site;
-          KtxUsers
-            .create({
-              name: $scope.auser.name,
-              fullname: $scope.auser.fullname,
-              password: pass,
-              password_salt: salt,
-              permissions: $scope.auser.permission,
-              sitesId: $scope.sitesId
-            }).$promise
-            .then(function(data) {
-              KtxUsers.find({
-                filter: {
-                  fields: {
-                    password: false,
-                    password_salt: false
-                  },
-                  include: [
-                    'sites'
-                  ]
-                }
+          if($scope.SiteSelected.length <= 0) {
+            $scope.Notify("Let choose sites","error");
+          }else {
+            KtxUsers
+              .create({
+                name: $scope.auser.name,
+                fullname: $scope.auser.fullname,
+                password: pass,
+                password_salt: salt,
+                permissions: $scope.auser.permission,
+                sitesId: $scope.SiteSelected
               }).$promise
-                .then(function(users) {
-                  $scope.listusers = users;
-                  $scope.Notify("Add user success","success");
-                });
-            }, function(err) {
-              console.log(err);
-              $scope.Notify("Error when add user","error");
-            });
+              .then(function(data) {
+                $scope.listusers.push(data);
+                $scope.Notify("Add user success","success");
+              }, function(err) {
+                console.log(err);
+                $scope.Notify("Error when add user","error");
+              });
+          }
         }
       }
 
@@ -228,7 +322,7 @@ angular
       /////////////////////////DELETE USER///////////////////////////////////
       //////////////////////////////////////////////////////////////////////
       $scope.deleteuser = function(id, name) {
-        if(confirm("Are you want to delete this user ?")) {
+        if(confirm("Are you want to delete " + name + " ?")) {
           if(name == 'superadmin' && id == '1') {
             $scope.Notify("This user not allow delete","error");
           }else {
