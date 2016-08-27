@@ -2,7 +2,7 @@ angular
   .module('app')
   .controller('RatesCtrl', ['$scope', 'Sites', 'Ktxrate', 'Plans', 'Packs', '$q', function ($scope, Sites, Ktxrate, Plans, Packs, $q) {
     var deferred = $q.defer();
-    $scope.site_name = "CÁC TRƯỜNG ĐẠI HỌC";
+    $scope.site_name = "CÃC TRÆ¯á»œNG Äáº I Há»ŒC";
     //console.log($scope.site_id);
     $("#rateMenu").css("min-height",$(window).height() - 100);
     if(!$scope.site_id){
@@ -180,32 +180,8 @@ angular
           }).$promise
         ]
       ).then(function(data) {
-        var value1 = data[0], value2 = data[1];
-        if(value2.length == 0) {
-          Ktxrate.create({
-            site_id   : $scope.site_id,
-            site_name : value1.name,
-            plan_id   : plan.id,
-            plan_name : plan.name
-          }).$promise
-            .then(function(data) {
-              refeshKtxRate();
-              refeshPlan();
-            },function(err) {
-              console.log(err);
-            });
-        }else {
-          var S_id = "", P_id = "";
-          value2.forEach(function(item2) {
-            if(item2.site_id == $scope.site_id && item2.plan_id == plan.id) {
-              return S_id = item2.site_id, P_id = item2.plan_id;
-            }else {
-              console.log("none");
-            }
-          });
-          if(S_id == $scope.site_id && P_id == plan.id) {
-            $scope.Notify("The plan has been already","error");
-          }else {
+          var value1 = data[0], value2 = data[1];
+          if(value2.length == 0) {
             Ktxrate.create({
               site_id   : $scope.site_id,
               site_name : value1.name,
@@ -218,9 +194,33 @@ angular
               },function(err) {
                 console.log(err);
               });
+          }else {
+            var S_id = "", P_id = "";
+            value2.forEach(function(item2) {
+              if(item2.site_id == $scope.site_id && item2.plan_id == plan.id) {
+                return S_id = item2.site_id, P_id = item2.plan_id;
+              }else {
+                console.log("none");
+              }
+            });
+            if(S_id == $scope.site_id && P_id == plan.id) {
+              $scope.Notify("The plan has been already","error");
+            }else {
+              Ktxrate.create({
+                site_id   : $scope.site_id,
+                site_name : value1.name,
+                plan_id   : plan.id,
+                plan_name : plan.name
+              }).$promise
+                .then(function(data) {
+                  refeshKtxRate();
+                  refeshPlan();
+                },function(err) {
+                  console.log(err);
+                });
+            }
           }
-        }
-      })
+        })
         .catch(function(err) {
           console.log(err);
         });

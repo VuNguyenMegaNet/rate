@@ -20,20 +20,20 @@ module.exports = function (app) {
   //  });
   //}
 
-  mysqlDs.automigrate('ktxUsers', function(err) {
-    if (err) throw err;
-    var pass = '123456';
-    var salt = Math.floor(Math.random() * 0x100000000);
-    salt = crypto.createHash('md5').update(salt.toString(16)).digest('hex');
-    var password = crypto.createHash('md5').update(pass + salt).digest('hex');
-    app.models.ktxUsers.create([
-      {name: 'superadmin', fullname: 'superadmin', password: password, password_salt: salt, permissions: '1'}
-    ], function(err, user) {
-      if (err) throw err;
-
-      console.log('Models created: \n', user);
-    });
-  });
+  //mysqlDs.automigrate('ktxUsers', function(err) {
+  //  if (err) throw err;
+  //  var pass = '123456';
+  //  var salt = Math.floor(Math.random() * 0x100000000);
+  //  salt = crypto.createHash('md5').update(salt.toString(16)).digest('hex');
+  //  var password = crypto.createHash('md5').update(pass + salt).digest('hex');
+  //  app.models.ktxUsers.create([
+  //    {name: 'superadmin', fullname: 'superadmin', password: password, password_salt: salt, permissions: '1'}
+  //  ], function(err, user) {
+  //    if (err) throw err;
+  //
+  //    console.log('Models created: \n', user);
+  //  });
+  //});
   //
   //mysqlDs.automigrate('ktxreport', function(err) {
   //  if (err) throw err;

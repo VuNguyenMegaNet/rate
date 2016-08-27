@@ -5,6 +5,7 @@ angular
     'datatables',
     'ngTouch',
     'ui.grid',
+    'ui.grid.expandable',
     'ui.grid.pagination',
     'ui.grid.moveColumns',
     'ui.grid.pinning',
@@ -44,19 +45,34 @@ angular
       .state('dashboard', {
         url: '/dashboard',
         templateUrl: 'views/dashboard/dashboard.html',
-        controller: 'DashboardCtrl'
+        controller: 'DashboardCtrl',
+        resolve: {
+          currentUser: ['AuthService', function(AuthService) {
+            return AuthService.getCurrentUser();
+          }]
+        }
       })
       .state('users', {
         url: '/users',
         templateUrl: 'views/users/users.html',
         controller: 'UsersCtrl',
-        permissions: true
+        permissions: true,
+        resolve: {
+          currentUser: ['AuthService', function(AuthService) {
+            return AuthService.getCurrentUser();
+          }]
+        }
       })
       .state('rates', {
         url: '/rates',
         templateUrl: 'views/rates/rates.html',
         controller: 'RatesCtrl',
-        permissions: true
+        permissions: true,
+        resolve: {
+          currentUser: ['AuthService', function(AuthService) {
+            return AuthService.getCurrentUser();
+          }]
+        }
       });
     $urlRouterProvider.otherwise('dashboard');
   }])

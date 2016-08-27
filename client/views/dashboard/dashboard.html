@@ -1,12 +1,10 @@
 <div class="block full">
   <div class="row">
     <div class="col-md-12">
-      <div class="block full">
-        <div class="block-title">
-          <h2><strong>Choose Site</strong></h2>
-        </div>
-        <div style="width:300px">
-          <select id="dash_sites" name="dash_sites" class="form-control" ng-model="dash.site" ng-change="changeSite()" ng-options="site.id as site.name for site in Sites">
+      <div class="row" style="margin-bottom:10px">
+        <div class="col-md-12">
+          <div style="font-size:14px;float:left;height:35px;line-height:35px">Select site:</div>
+          <select style="float:left;height:34px;width:250px;border-radius:4px;margin-left:3px" id="dash_sites" name="dash_sites" ng-model="dash.site" ng-change="changeSite()" ng-options="site.id as site.name for site in Sites">
             <option value="">Please select site</option>
           </select>
         </div>
@@ -22,29 +20,35 @@
               <span style="margin-top:1px;float:right;width:20%;text-align:center;border:1px solid #ccc;border-left:0;height:34px;line-height:34px;border-bottom-right-radius:4px;border-top-right-radius:4px;cursor:pointer"><i class="fa fa-search"></i></span>
             </div>
             <div style="margin-top:3px;float:right;width:250px">
-              <input type="daterange" class="form-control" ng-model="dates" ranges="ranges" opens="left" ng-change="changedates()" readonly style="cursor:pointer;width:85%;float:left;border-top-right-radius:0;border-bottom-right-radius:0">
+              <input data-toggle="tooltip" title="Choose date" type="daterange" class="form-control" ng-model="dates" ranges="ranges" opens="left" ng-change="changedates()" readonly style="cursor:pointer;width:85%;float:left;border-top-right-radius:0;border-bottom-right-radius:0">
               <span style="margin-top:1px;float:right;width:15%;text-align:center;border:1px solid #ccc;border-left:0;height:34px;line-height:34px;border-bottom-right-radius:4px;border-top-right-radius:4px;cursor:pointer"><i class="fa fa-calendar"></i></span>
             </div>
           </div>
           <ul class="nav nav-tabs" data-toggle="tabs">
-            <li class="Chart-view" ng-click="clickchart()"><a href="javascript:void(0)" title="Chart View"><i class="gi gi-charts"></i></a></li>
-            <li class="Grid-view" title="Grid View" ng-click="clickgrid()"><a href="javascript:void(0)"><i class="gi gi-table"></i></a></li>
+            <li class="IncomeGrid-view" data-toggle="tooltip" title="Detail Income" ng-click="clickIncomeGrid()"><a href="javascript:void(0)"><i class="hi hi-list"></i></a></li>
+            <li class="Grid-view" data-toggle="tooltip" title="Detail Pack" ng-click="clickgrid()"><a href="javascript:void(0)"><i class="gi gi-table"></i></a></li>
+            <li class="Chart-view" ng-click="clickchart()"><a href="javascript:void(0)" data-toggle="tooltip" title="Chart"><i class="gi gi-charts"></i></a></li>
           </ul>
         </div>
         <!-- END Block Tabs Title -->
 
         <!-- Tabs Content -->
         <div class="tab-content">
+          <div class="tab-pane IncomeGrid-view">
+            <div style="margin-bottom:5px;font-size:15pt;color:#FF0000;font-weight:bold">Total Income: <span>{{TotalIncome}}</span></div>
+            <div ui-grid="gridIncomeOptions" ui-grid-expandable ui-grid-pagination ui-grid-move-columns ui-grid-pinning ui-grid-resize-columns class="grid" id="gridIncome"></div>
+          </div>
+
           <div class="tab-pane Grid-view">
             <div ui-grid="gridOptions" ui-grid-pagination ui-grid-move-columns ui-grid-pinning ui-grid-resize-columns class="grid" id="grid"></div>
           </div>
 
           <div class="tab-pane Chart-view">
-            <div id="summary_chart" style="display:inline-block;width:50px;height:40px;line-height:40px;text-align:center;cursor:pointer"><a href="javascript:void(0)" title="Summary Report"><i class="fa fa-pie-chart" style="font-size:20px"></i></a></div>
-            <div id="detail_chart" style="display:inline-block;width:50px;height:40px;line-height:40px;text-align:center;cursor:pointer"><a href="javascript:void(0)" title="Detail Report"><i class="fa fa-bar-chart" style="font-size:20px"></i></a></div>
+            <div id="summary_chart" style="display:inline-block;width:50px;height:40px;line-height:40px;text-align:center;cursor:pointer"><a href="javascript:void(0)" data-toggle="tooltip" title="Summary Report"><i class="fa fa-pie-chart" style="font-size:20px"></i></a></div>
+            <div id="detail_chart" style="display:inline-block;width:50px;height:40px;line-height:40px;text-align:center;cursor:pointer"><a href="javascript:void(0)" data-toggle="tooltip" title="Detail Report"><i class="fa fa-bar-chart" style="font-size:20px"></i></a></div>
             <div id="summaryChart" style="margin-top:10px;width:100%">
-              <div id="tab-income"><a href="javascript:void(0)" title="Income" style="text-decoration:none"><i class="fa fa-money" style="font-size:18px"></i><span style="padding-left:10px">INCOME</span></a></div>
-              <div id="tab-pack" style="margin-top:10px"><a href="javascript:void(0)" title="Pack" style="text-decoration:none"><i class="fa fa-credit-card" style="font-size:18px"></i><span style="padding-left:10px">PACK</span></a></div>
+              <div id="tab-income"><a href="javascript:void(0)" data-toggle="tooltip" title="Income" style="text-decoration:none"><i class="fa fa-money" style="font-size:18px"></i><span style="padding-left:10px">INCOME</span></a></div>
+              <div id="tab-pack" style="margin-top:10px"><a href="javascript:void(0)" data-toggle="tooltip" title="Pack" style="text-decoration:none"><i class="fa fa-credit-card" style="font-size:18px"></i><span style="padding-left:10px">PACK</span></a></div>
               <div id="render_chart_income"></div>
               <div id="render_chart_rate"></div>
             </div>
