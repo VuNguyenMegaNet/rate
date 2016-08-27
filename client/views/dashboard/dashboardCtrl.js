@@ -1,6 +1,6 @@
 angular
   .module('app')
-  .controller('DashboardCtrl', ['$scope', '$rootScope', '$filter', 'Ktxpacks', 'Ktxreport', 'Sites', '$q', function($scope, $rootScope, $filter, Ktxpacks, Ktxreport, Sites, $q) {
+  .controller('DashboardCtrl', ['$scope', '$rootScope', '$filter', 'Ktxpacks', 'Ktxreport', 'Sites', '$q', 'uiGridConstants', function($scope, $rootScope, $filter, Ktxpacks, Ktxreport, Sites, $q, uiGridConstants) {
     $scope.dates = {
       startDate: moment().subtract(7, 'days').startOf('day').format("YYYY-MM-DD HH:mm:ss"),
       endDate: moment().endOf('day').format("YYYY-MM-DD HH:mm:ss")
@@ -16,11 +16,15 @@ angular
 
     $scope.changedates = function() {
       getPage($scope.dates, $scope.dash.site);
+      getPageIncome($scope.dates, $scope.dash.site);
+      getTotalIncome($scope.dates, $scope.dash.site);
       getDateChart($scope.dates, $scope.dash.site, $scope.render, $scope.nameChart);
     };
 
     $scope.changeSite = function() {
       getPage($scope.dates, $scope.dash.site);
+      getPageIncome($scope.dates, $scope.dash.site);
+      getTotalIncome($scope.dates, $scope.dash.site);
       getDateChart($scope.dates, $scope.dash.site, $scope.render, $scope.nameChart);
     };
 
@@ -88,6 +92,179 @@ angular
 
     new checkSite();
 
+    //////////////////////Grid-Income///////////////////////
+    ///////////////////////////////////////////////////////
+    var paginationIncomeOptions = {
+      pageNumber: 1,
+      pageSize: 20,
+      sort: null
+    };
+
+    $scope.gridIncomeOptions = {
+      rowHeight: 40,
+      enableGridMenu: true,
+      fastWatch: true,
+      expandableRowTemplate: '<div ui-grid="row.entity.subGridOptions" style="height:160px;width:100%"></div>',
+      expandableRowHeight: 160,
+      onRegisterApi: function (gridApi) {
+        $scope.gridApi2 = gridApi;
+        gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
+          paginationIncomeOptions.pageNumber = newPage;
+          paginationIncomeOptions.pageSize = pageSize;
+          getPageIncome($scope.dates, $scope.dash.site);
+        });
+
+        gridApi.expandable.on.rowExpandedStateChanged($scope, function (row) {
+          if (row.isExpanded) {
+            row.entity.subGridOptions = {
+              columnDefs: [
+                { name: 'plan', field: 'name'},
+                { name: 'pack', field: 'pack'},
+                { name: 'income', field: 'income'}
+              ]
+            };
+            var startdatesub = moment(row.entity.date, 'DD-MM-YYYY').startOf('day').format('YYYY-MM-DD HH:mm:ss');
+            var enddatesub = moment(row.entity.date, 'DD-MM-YYYY').endOf('day').format('YYYY-MM-DD HH:mm:ss');
+
+            Ktxreport
+              .find({
+                filter: {
+                  where: {
+                    days: { between: [startdatesub,enddatesub] },
+                    site_id: $scope.dash.site
+                  }
+                }
+              }).$promise
+              .then(function(report) {
+                var data = [];
+                report.forEach(function(item) {
+                  item.report.forEach(function(item2) {
+                    data.push({
+                      name: item2.plan_name,
+                      pack: item2.total_rate,
+                      income: item2.total_income.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+                    });
+                  });
+                });
+                row.entity.subGridOptions.data = data;
+              }, function(err) {
+                console.log("error packs: " + err);
+              });
+          }
+        });
+      },
+      paginationPageSizes: [10, 20, 50, 9999],
+      paginationPageSize: 20,
+      useExternalPagination: true
+    };
+
+    $scope.gridIncomeOptions.columnDefs =  [
+      {
+        name:'date', width:'30%', headerCellClass: 'colorHeader',
+        sort: {
+          direction: uiGridConstants.DESC
+        }
+      },
+      { name:'pack', field: 'pack', width:'30%', headerCellClass: 'colorHeader'  },
+      { name:'income', headerCellClass: 'colorHeader' }
+    ];
+
+    var getPageIncome = function(date, site) {
+      $scope.dataIncome = [];
+      // Ðây là nh?ng thông s? dùng d? limit row
+      if(paginationIncomeOptions.pageNumber == 1) {
+        $scope.offsetIncome = 0;
+      } else {
+        $scope.offsetIncome = (paginationIncomeOptions.pageNumber * paginationIncomeOptions.pageSize) - paginationIncomeOptions.pageSize;
+      }
+
+      var startdate = moment($scope.dates.startDate).format("YYYY-MM-DD HH:mm:ss");
+      var enddate = moment($scope.dates.endDate).format("YYYY-MM-DD HH:mm:ss");
+      ////////////////////SQL QUERY GRID///////////////////////////
+      //SELECT * FROM `ktxpacks` WHERE `sold_at` BETWEEN '2016-06-28 00:00:00.000000' AND '2016-06-28 23:59:59.999999' AND `site_id` = 465 LIMIT 10 OFFSET 0
+      Ktxreport
+        .find({
+          filter: {
+            where: {
+              days: { between: [startdate,enddate] },
+              site_id: site
+            },
+            limit: paginationIncomeOptions.pageSize,
+            skip: $scope.offsetIncome
+          }
+        }).$promise
+        .then(function(incomes) {
+          var t = [];
+          incomes.forEach(function(item) {
+            var total_pack = [],
+              total_income = [];
+            item.report.forEach(function(item2) {
+              total_pack.push(item2.total_rate);
+              total_income.push(item2.total_income);
+            });
+            var totalpack = _.sum(total_pack),
+              totalincome = _.sum(total_income);
+              t.push(totalincome);
+            $scope.dataIncome.push({
+              date: moment(item.days).format("DD-MM-YYYY"),
+              pack: totalpack,
+              income: totalincome.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+            });
+          });
+          $scope.gridIncomeOptions.data = $scope.dataIncome;
+        }, function(err) {
+          console.log("error packs: " + err);
+        });
+
+      ////////////////////////////SQL COUNT QUERY/////////////////////////////////////
+      Ktxreport
+        .count({
+          where: {
+            days: { between: [startdate,enddate] },
+            site_id: site
+          }
+        }).$promise
+        .then(function(counts) {
+          $scope.gridIncomeOptions.totalItems = counts.count;// s? này là s? phía server ph?i tr? v? ( có d?ng là total )
+        }, function(err) {
+          console.log("error count: " + err);
+        });
+    };
+
+    getPageIncome($scope.dates, $scope.dash.site);
+
+    //////////////////////Total Income////////////////
+    /////////////////////////////////////////////////
+    var getTotalIncome = function(date, site) {
+      var startdate = moment($scope.dates.startDate).format("YYYY-MM-DD HH:mm:ss");
+      var enddate = moment($scope.dates.endDate).format("YYYY-MM-DD HH:mm:ss");
+
+      Ktxreport
+        .find({
+          filter: {
+            where: {
+              days: { between: [startdate,enddate] },
+              site_id: site
+            }
+          }
+        }).$promise
+        .then(function(incomes) {
+          var t = [];
+          incomes.forEach(function(item) {
+            var total_income = [];
+            item.report.forEach(function(item2) {
+              total_income.push(item2.total_income);
+            });
+            var totalincome = _.sum(total_income);
+            t.push(totalincome);
+          });
+          $scope.TotalIncome = _.sum(t).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+        }, function(err) {
+          console.log("error total: " + err);
+        });
+    }
+
+    getTotalIncome($scope.dates, $scope.dash.site);
     //////////////////////Grid///////////////////////
     ////////////////////////////////////////////////
     var paginationOptions = {
@@ -123,11 +300,11 @@ angular
 
     var getPage = function(date, site) {
       $scope.data = [];
-      // Đây là những thông số dùng để limit row
+      // Ðây là nh?ng thông s? dùng d? limit row
       if(paginationOptions.pageNumber == 1) {
-        $scope.offest = 0;
+        $scope.offset = 0;
       } else {
-        $scope.offest = (paginationOptions.pageNumber * paginationOptions.pageSize) - paginationOptions.pageSize;
+        $scope.offset = (paginationOptions.pageNumber * paginationOptions.pageSize) - paginationOptions.pageSize;
       }
 
       var startdate = moment($scope.dates.startDate).format("YYYY-MM-DD HH:mm:ss");
@@ -142,7 +319,7 @@ angular
               site_id: site
             },
             limit: paginationOptions.pageSize,
-            skip: $scope.offest
+            skip: $scope.offset
           }
         }).$promise
         .then(function(packs) {
@@ -166,13 +343,13 @@ angular
       //SELECT COUNT(*) FROM `ktxpacks` WHERE `sold_at` BETWEEN '2016-06-28 00:00:00.000000' AND '2016-06-28 23:59:59.999999' AND `site_id` = 465
       Ktxpacks
         .count({
-            where: {
-              sold_at: { between: [startdate,enddate] },
-              site_id: site
-            }
+          where: {
+            sold_at: { between: [startdate,enddate] },
+            site_id: site
+          }
         }).$promise
         .then(function(packs) {
-          $scope.gridOptions.totalItems = packs.count;// số này là số phía server phải trả về ( có dạng là total )
+          $scope.gridOptions.totalItems = packs.count;// s? này là s? phía server ph?i tr? v? ( có d?ng là total )
         }, function(err) {
           console.log("error count: " + err);
         });
@@ -181,12 +358,23 @@ angular
     getPage($scope.dates, $scope.dash.site);
 
     $scope.gridtab = false;
-    $('.Chart-view').addClass('active');
+    $('.IncomeGrid-view').addClass('active');
     $('.Grid-view').removeClass('active');
+    $('.Chart-view').removeClass('active');
+
+    $scope.clickIncomeGrid = function() {
+      $scope.gridtab = false;
+      $('.Chart-view').removeClass('active');
+      $('.Grid-view').removeClass('active');
+      $('.IncomeGrid-view').addClass('active');
+      $scope.gridApi2.core.handleWindowResize();
+      getPageIncome($scope.dates, $scope.dash.site);
+    };
 
     $scope.clickgrid = function() {
       $scope.gridtab = true;
       $('.Chart-view').removeClass('active');
+      $('.IncomeGrid-view').removeClass('active');
       $('.Grid-view').addClass('active');
       $scope.gridApi.core.handleWindowResize();
       getPage($scope.dates, $scope.dash.site);
@@ -195,6 +383,7 @@ angular
     $scope.clickchart = function() {
       $scope.gridtab = false;
       $('.Grid-view').removeClass('active');
+      $('.IncomeGrid-view').removeClass('active');
       $('.Chart-view').addClass('active');
       initDetailChart($scope.chartSeries);
       getDateChart($scope.dates, $scope.dash.site, $scope.render, $scope.nameChart);

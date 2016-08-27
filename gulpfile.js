@@ -52,6 +52,12 @@ gulp.task('js', function() {
     .pipe(gulp.dest('client/public/build/js'));
 });
 
+gulp.task('js:dev', function() {
+  gulp.src(paths.jsplugins)
+    .pipe(concat('rate.min.js'))
+    .pipe(gulp.dest('client/public/build/js'));
+});
+
 gulp.task('watch', function() {
   gulp.watch(paths.jsplugins, ['js']);
 });
@@ -67,9 +73,12 @@ gulp.task('autoload', [], function() {
 });
 
 gulp.task('default', [
-  'js',
-  'watch'
-  //'autoload'
+  'js:dev',
+  'watch',
+  'autoload'
 ]);
 
-
+gulp.task('build', [
+  'js',
+  'watch'
+]);
