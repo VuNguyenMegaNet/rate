@@ -325,6 +325,10 @@ var FormsValidation = function() {
               required: true,
               equalTo: '#val_password_edit_area'
             },
+            val_oldpassword_edit_area: {
+              required: true,
+              minlength: 5
+            },
             val_bio: {
               required: true,
               minlength: 5
@@ -369,6 +373,10 @@ var FormsValidation = function() {
             },
             val_email: 'Please enter a valid email address',
             val_password_edit_area: {
+              required: 'Please provide a password',
+              minlength: 'Your password must be at least 5 characters long'
+            },
+            val_oldpassword_edit_area: {
               required: 'Please provide a password',
               minlength: 'Your password must be at least 5 characters long'
             },

@@ -127,6 +127,7 @@ angular
     $scope.editUserArea = function() {
       $('#val_password_edit_area').val("");
       $('#val_confirm_password_edit_area').val("");
+      $('#val_oldpassword_edit_area').val("");
       $('button.submit').prop('disabled', "disabled");
     };
 
@@ -136,16 +137,36 @@ angular
       salt = (MD5(salt));
       var pass = (MD5($scope.tuser.password + salt));
       KtxUsers
-        .prototype$updateAttributes({
-          id: $rootScope.securityInfo.current_user.id,
-          password: pass,
-          password_salt: salt
+        .find({
+          filter: {
+            where: {
+              id: $rootScope.securityInfo.current_user.id
+            }
+          }
         })
         .$promise
         .then(function(data) {
+          var passwordMatch = (MD5($scope.tuser.oldpassword + data[0].password_salt));
+          if(passwordMatch == data[0].password) {
+             return KtxUsers
+              .prototype$updateAttributes({
+                id: $rootScope.securityInfo.current_user.id,
+                password: pass,
+                password_salt: salt
+              })
+              .$promise
+          }else {
+            $scope.Notify("the old password is not correct","error");
+            return new Promise(function(resolve, reject) {
+              reject("error");
+            });
+          }
+        })
+        .then(function(data2) {
           $scope.Notify("This user updated success","success");
-        }, function(err) {
-          $scope.Notify("Error when update user","error");
+        })
+        .catch(function(err) {
+          console.log(err);
         });
     };
 
