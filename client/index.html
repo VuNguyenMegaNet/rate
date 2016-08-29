@@ -274,6 +274,15 @@
           <fieldset>
             <legend><i class="fa fa-wrench"></i> Password Update</legend>
             <div class="form-group">
+              <label class="col-md-4 control-label" for="val_oldpassword_edit_area">Old Password <span class="text-danger">*</span></label>
+              <div class="col-md-8">
+                <div class="input-group">
+                  <input type="password" id="val_oldpassword_edit_area" name="val_oldpassword_edit_area" class="form-control" placeholder="Type password..." ng-model="tuser.oldpassword">
+                  <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
               <label class="col-md-4 control-label" for="val_password_edit_area">New Password <span class="text-danger">*</span></label>
               <div class="col-md-8">
                 <div class="input-group">

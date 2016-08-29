@@ -5,10 +5,6 @@
   "options": {
     "validateUpsert": true
   },
-  "hidden": [
-    "password",
-    "password_salt"
-  ],
   "properties": {
     "name": {
       "type": "String",
